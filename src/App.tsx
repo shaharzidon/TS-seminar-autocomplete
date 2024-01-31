@@ -1,4 +1,5 @@
 import "./App.css";
+import { Pokemon } from "./mock.data";
 
 function App() {
   return (
