@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFilter } from "./hooks";
+import { SearchField } from "./searchField";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 export type MultiOrSingular<T> =
   | { isMulti: true; onChange: (value: T[]) => void }
@@ -21,6 +23,7 @@ export const Autocomplete = <T,>({
   isMulti,
   onChange,
   filterFunction,
+  getOptionLabel,
 }: AutocompleteProps<T>) => {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, T>>({});
 
@@ -70,18 +73,32 @@ export const Autocomplete = <T,>({
 
   return (
     <div>
-      <SearchField filter={filter} setFilter={setFilter} />
+      <Popover>
+        <PopoverTrigger>
+          <SearchField filter={filter} setFilter={() => setFilter} />
+        </PopoverTrigger>
+        <PopoverContent align="start">
+          <div className="flex flex-col gap-2">
+            {filteredOptions.length > 0 ? (
+              filteredOptions.map((option) => (
+                <div
+                  key={getOptionID(option)}
+                  onClick={() => toggleOption(option)}
+                  className={`${
+                    selectedOptions[getOptionID(option)]
+                      ? "bg-blue-300"
+                      : "hover:bg-gray-200"
+                  } cursor-pointer p-2 rounded-md`}
+                >
+                  {getOptionLabel(option)}
+                </div>
+              ))
+            ) : (
+              <div>No results</div>
+            )}
+          </div>
+        </PopoverContent>
+      </Popover>
     </div>
   );
-};
-
-type FilterState<T> = Pick<
-  ReturnType<typeof useFilter<T>>,
-  "filter" | "setFilter"
->;
-
-type SearchFieldProps<T> = FilterState<T>;
-
-const SearchField = <T,>({ filter, setFilter }: SearchFieldProps<T>) => {
-  return <input value={filter} onChange={(e) => setFilter(e.target.value)} />;
 };

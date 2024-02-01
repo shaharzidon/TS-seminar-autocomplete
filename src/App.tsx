@@ -21,8 +21,10 @@ function App() {
         options={pokemon}
         getOptionLabel={(p) => p.name}
         getOptionID={(p) => p.pokedexEntryNumber.toString()}
-        filterFunction={(p, s) => p.name.includes(s)}
-        isMulti={false}
+        filterFunction={(p, s) =>
+          p.name.toLocaleLowerCase().includes(s.toLocaleLowerCase())
+        }
+        isMulti={true}
         onChange={(p) => console.log(p)}
       />
     </div>
