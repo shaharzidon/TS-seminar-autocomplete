@@ -1,6 +1,6 @@
 export type Pokemon = {
   type: string;
-  isLegendary: boolean;
+  isLegendary?: boolean;
   name: string;
   pokedexEntryNumber: number;
 };
@@ -8,19 +8,16 @@ export type Pokemon = {
 export const pokemons: Pokemon[] = [
   {
     type: "Fire",
-    isLegendary: false,
     name: "Charmander",
     pokedexEntryNumber: 4,
   },
   {
     type: "Water",
-    isLegendary: false,
     name: "Squirtle",
     pokedexEntryNumber: 7,
   },
   {
     type: "Grass",
-    isLegendary: false,
     name: "Bulbasaur",
     pokedexEntryNumber: 1,
   },
@@ -44,7 +41,6 @@ export const pokemons: Pokemon[] = [
   },
   {
     type: "Ice",
-    isLegendary: false,
     name: "Glaceon",
     pokedexEntryNumber: 471,
   },
