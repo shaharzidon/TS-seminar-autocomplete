@@ -26,7 +26,7 @@ export const Autocomplete = <T,>({
 
   const toggleOption = (option: T) => {
     const id = getOptionID(option);
-    setSelectedOptions((lastState) => {
+    setSelectedOptions((lastState: Record<string, T>) => {
       const isOptionsSelected = lastState[id];
       if (isMulti) {
         if (isOptionsSelected) {
