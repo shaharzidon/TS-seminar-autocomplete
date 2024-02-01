@@ -1,31 +1,16 @@
 import { useState, useMemo } from "react";
-import { AutocompleteProps } from ".";
+import { AutocompleteProps, BaseAutocompleteProps } from ".";
 
-export type UseFiltersArgs<T> = {
-  options: T[];
-  filterFunction: (value: T, filter: string) => boolean;
-};
+// 6. use Pick utility type to constract dynamic type - when AutocompleteProps change the type is updated
+type UseAutocompleteOptionSelectHandlareArgs<T> = Pick<
+  AutocompleteProps<T>,
+  "getOptionID" | "isMulti"
+>;
 
-export const useFilter = <T>({
-  options,
-  filterFunction,
-}: UseFiltersArgs<T>) => {
-  const [filter, setFilter] = useState<string>("");
-
-  const filteredOptions = useMemo(() => {
-    return options.filter((value: T) => filterFunction(value, filter));
-  }, [options, filter, filterFunction]);
-
-  return {
-    filter,
-    setFilter,
-    filteredOptions,
-  };
-};
-
-type UseAutocompleteOptionSelectHandlareArgs<T> = Pick<AutocompleteProps<T>, "getOptionID" | "isMulti">
-
-export const useAutocompleteOptionSelectHandlare = <T,>({getOptionID, isMulti}:UseAutocompleteOptionSelectHandlareArgs<T>) =>{
+export const useAutocompleteOptionSelectHandlare = <T>({
+  getOptionID,
+  isMulti,
+}: UseAutocompleteOptionSelectHandlareArgs<T>) => {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, T>>({});
 
   const toggleOption = (option: T) => {
@@ -50,8 +35,32 @@ export const useAutocompleteOptionSelectHandlare = <T,>({getOptionID, isMulti}:U
     });
   };
 
-  return{
+  return {
     selectedOptions,
-    toggleOption
-  }
-}
+    toggleOption,
+  };
+};
+
+// 7. create the type for the arguments in useFilters - use BaseAutocompleteProps and Omit
+// NOTE: just for practice, Pick would be a better logical choice
+export type UseFiltersArgs<T> = Omit<
+  BaseAutocompleteProps<T>,
+  "isMulti" | "getOptionID" | "getOptionLabel"
+>;
+
+export const useFilter = <T>({
+  options,
+  filterFunction,
+}: UseFiltersArgs<T>) => {
+  const [filter, setFilter] = useState<string>("");
+
+  const filteredOptions = useMemo(() => {
+    return options.filter((value: T) => filterFunction(value, filter));
+  }, [options, filter, filterFunction]);
+
+  return {
+    filter,
+    setFilter,
+    filteredOptions,
+  };
+};

@@ -1,10 +1,12 @@
+// 1. basic typing
 export type Pokemon = {
-  type: string;
+  type: PokemonType;
   isLegendary?: boolean;
   name: string;
   pokedexEntryNumber: number;
 };
 
+// 2. advanced enum
 export const PokemonTypes = {
   Fire: "fire",
   Water: "water",
