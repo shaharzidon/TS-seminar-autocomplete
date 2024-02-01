@@ -4,6 +4,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Input } from "@/components/ui/input";
 import {Option} from "./components"
 
+// Discreminarting union
 export type MultiOrSingular<T> =
   | { isMulti: true; onChange: (value: T[]) => void }
   | { isMulti: false; onChange: (value: T) => void };
@@ -16,7 +17,7 @@ export type AutocompleteProps<T> = {
   filterFunction: (option: T, search: string) => boolean;
 } & MultiOrSingular<T>;
 
-type useFilterArguments<T> = Parameters<typeof useFilter<T>>[0];
+//type useFilterArguments<T> = Parameters<typeof useFilter<T>>[0];
 
 export const Autocomplete = <T,>({
   options,
@@ -30,14 +31,11 @@ export const Autocomplete = <T,>({
     isMulti, 
     getOptionID
   })
-
-  // type safty for arguments that are not passed inline
-  const useFiltersArguments: useFilterArguments<T> = {
-    options,
-    filterFunction,
-  };
   
-  const { filter, setFilter, filteredOptions } = useFilter(useFiltersArguments);
+  const { filter, setFilter, filteredOptions } = useFilter({
+    options,
+    filterFunction,  
+  });
   
   // On options state change trigger onChange appropriatly
   useEffect(() => {
