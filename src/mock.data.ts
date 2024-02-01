@@ -5,72 +5,74 @@ export type Pokemon = {
   pokedexEntryNumber: number;
 };
 
-enum Types {
-  Fire = "fire",
-  Water = "water",
-  Grass = "grass",
-  Electric = "electric",
-  Psychic = "psychic",
-  Dragon = "dragon",
-  Ice = "ice",
-  Fairy = "fairy",
-  Ghost = "ghost",
-  Steel = "steel",
-}
+export const PokemonTypes = {
+  Fire: "fire",
+  Water: "water",
+  Grass: "grass",
+  Electric: "electric",
+  Psychic: "psychic",
+  Dragon: "dragon",
+  Ice: "ice",
+  Fairy: "fairy",
+  Ghost: "ghost",
+  Steel: "steel",
+} as const;
+
+export type PokemonType = (typeof PokemonTypes)[keyof typeof PokemonTypes];
 
 export const pokemons: Pokemon[] = [
   {
-    type: Types.Fire,
+    type: PokemonTypes.Fire,
     name: "Charmander",
     pokedexEntryNumber: 4,
   },
   {
-    type: Types.Water,
+    type: PokemonTypes.Water,
     name: "Squirtle",
     pokedexEntryNumber: 7,
   },
   {
-    type: Types.Grass,
+    type: PokemonTypes.Grass,
     name: "Bulbasaur",
     pokedexEntryNumber: 1,
   },
   {
-    type: Types.Electric,
+    type: PokemonTypes.Electric,
     isLegendary: false,
     name: "Pikachu",
     pokedexEntryNumber: 25,
   },
   {
-    type: Types.Psychic,
+    type: PokemonTypes.Psychic,
     isLegendary: true,
     name: "Mewtwo",
     pokedexEntryNumber: 150,
   },
   {
-    type: Types.Dragon,
+    type: PokemonTypes.Dragon,
     isLegendary: true,
     name: "Rayquaza",
     pokedexEntryNumber: 384,
   },
   {
-    type: Types.Ice,
+    type: PokemonTypes.Ice,
     name: "Glaceon",
     pokedexEntryNumber: 471,
   },
   {
-    type: Types.Fairy,
+    type: PokemonTypes.Fairy,
     isLegendary: false,
     name: "Sylveon",
     pokedexEntryNumber: 700,
   },
   {
-    type: Types.Ghost,
+    type: PokemonTypes.Ghost,
     isLegendary: false,
     name: "Gengar",
     pokedexEntryNumber: 94,
   },
   {
-    type: Types.Steel,
+    type: PokemonTypes.Steel,
     isLegendary: true,
     name: "Dialga",
     pokedexEntryNumber: 483,
