@@ -5,7 +5,7 @@ export type Pokemon = {
   pokedexEntryNumber: number;
 };
 
-export const pokemon: Pokemon[] = [
+export const pokemons: Pokemon[] = [
   {
     type: "Fire",
     isLegendary: false,
