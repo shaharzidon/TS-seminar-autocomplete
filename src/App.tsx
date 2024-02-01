@@ -4,17 +4,8 @@ import { pokemon } from "./mock.data";
 
 function App() {
   return (
-    <div
-      id="root"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "16px",
-        justifyContent: "start",
-        alignItems: "start",
-        width: "100%",
-        height: "100%",
-      }}
+    <div     
+    className="flex flex-col gap-4 justify-start items-start w-full h-full"
     >
       <h1>My Awsome Pokemon Selector</h1>
       <Autocomplete
