@@ -40,11 +40,12 @@ export const Autocomplete = <T,>({
   // On options state change trigger onChange appropriatly
   useEffect(() => {
     if (isMulti) {
-      onChange(Object.values(selectedOptions));
+      const allOptions = Object.values(selectedOptions)
+      onChange(allOptions);      
     } else {
       const singleOption = Object.values(selectedOptions)[0];
       if (singleOption !== undefined) {
-        onChange(singleOption);
+        onChange(singleOption);        
       }
     }
   }, [selectedOptions, isMulti, onChange]);
