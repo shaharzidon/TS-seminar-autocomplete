@@ -1,5 +1,6 @@
 import "./App.css";
-import { Pokemon } from "./mock.data";
+import { Autocomplete } from "./components/autocomplete";
+import { pokemon } from "./mock.data";
 
 function App() {
   return (
@@ -16,6 +17,14 @@ function App() {
       }}
     >
       <h1>My Awsome Pokemon Selector</h1>
+      <Autocomplete
+        options={pokemon}
+        getOptionLabel={(p) => p.name}
+        getOptionID={(p) => p.pokedexEntryNumber.toString()}
+        filterFunction={(p, s) => p.name.includes(s)}
+        isMulti={false}
+        onChange={(p) => console.log(p)}
+      />
     </div>
   );
 }
