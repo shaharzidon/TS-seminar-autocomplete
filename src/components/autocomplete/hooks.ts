@@ -2,10 +2,7 @@ import { useState, useMemo } from "react";
 import { AutocompleteProps, BaseAutocompleteProps } from ".";
 
 // 6. use Pick utility type to constract dynamic type - when AutocompleteProps change the type is updated
-type UseAutocompleteOptionSelectHandlareArgs<T> = Pick<
-  AutocompleteProps<T>,
-  "getOptionID" | "isMulti"
->;
+type UseAutocompleteOptionSelectHandlareArgs<T> = Pick<>;
 
 export const useAutocompleteOptionSelectHandlare = <T>({
   getOptionID,
@@ -43,10 +40,7 @@ export const useAutocompleteOptionSelectHandlare = <T>({
 
 // 7. create the type for the arguments in useFilters - use BaseAutocompleteProps and Omit
 // NOTE: just for practice, Pick would be a better logical choice
-export type UseFiltersArgs<T> = Omit<
-  BaseAutocompleteProps<T>,
-  "isMulti" | "getOptionID" | "getOptionLabel"
->;
+export type UseFiltersArgs<T> = Omit<>;
 
 export const useFilter = <T>({
   options,
