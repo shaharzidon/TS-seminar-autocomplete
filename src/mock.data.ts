@@ -1,28 +1,52 @@
-// 1. basic typing
+//1. v1 of pokemon type using enum
 export type Pokemon = {
-  type: PokemonType;
+  type: PokemonTypes;
   isLegendary?: boolean;
   name: string;
   pokedexEntryNumber: number;
 };
 
-// 2. advanced enum
-export const PokemonTypes = {
-  Fire: "fire",
-  Water: "water",
-  Grass: "grass",
-  Electric: "electric",
-  Psychic: "psychic",
-  Dragon: "dragon",
-  Ice: "ice",
-  Fairy: "fairy",
-  Ghost: "ghost",
-  Steel: "steel",
-} as const;
+export enum PokemonTypes {
+  Fire = "fire",
+  Water = "water",
+  Grass = "grass",
+  Electric = "electric",
+  Psychic = "psychic",
+  Dragon = "dragon",
+  Ice = "ice",
+  Fairy = "fairy",
+  Ghost = "ghost",
+  Steel = "steel",
+}
 
-export type PokemonType = (typeof PokemonTypes)[keyof typeof PokemonTypes];
+// // 9. version 2, use strict enums, build a type for Pokemon type
+// // This way of implementing enum is better because I have full access to all the
+// // keys and values and it is defined as a varable AND a type
 
-export const pokemons: Pokemon[] = [
+// export const PokemonTypes = {
+//   Fire: "fire",
+//   Water: "water",
+//   Grass: "grass",
+//   Electric: "electric",
+//   Psychic: "psychic",
+//   Dragon: "dragon",
+//   Ice: "ice",
+//   Fairy: "fairy",
+//   Ghost: "ghost",
+//   Steel: "steel",
+// } as const;
+
+// export type PokemonType = (typeof PokemonTypes)[keyof typeof PokemonTypes];
+
+// // 10. update the pokemon type accordingly
+// export type Pokemon = {
+//   type: PokemonType;
+//   isLegendary?: boolean;
+//   name: string;
+//   pokedexEntryNumber: number;
+// };
+
+export const pokemons: Array<Pokemon> = [
   {
     type: PokemonTypes.Fire,
     name: "Charmander",
