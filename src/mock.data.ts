@@ -19,6 +19,8 @@ export enum PokemonTypes {
   Steel = "steel",
 }
 
+// // 9. version 2, use strict enums, build a type for Pokemon type
+
 // 2. Array type with generic Pokemon type
 export const pokemons: Array<Pokemon> = [
   {
