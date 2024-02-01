@@ -59,11 +59,29 @@ export const Autocomplete = <T,>({
     }
   }, [selectedOptions, isMulti, onChange]);
 
+  // Function to render selected options
+  const renderSelectedOptions = () => {
+    return isMulti ? (
+      <span>
+        {Object.values(selectedOptions)
+          .map((option) => getOptionLabel(option))
+          .join(", ")}
+      </span>
+    ) : (
+      getOptionLabel(Object.values(selectedOptions)[0])
+    );
+  };
+
   return (
-    <div>
+    <div className="w-full flex justify-stretch items-center">
       <Popover>
         <PopoverTrigger autoFocus>
+          {renderSelectedOptions()}
           <Input
+            className="min-w-full"
+            placeholder="Search"
+            type="text"
+            name="search"
             autoFocus
             value={filter}
             onChange={(e) => {
@@ -74,6 +92,7 @@ export const Autocomplete = <T,>({
         <PopoverContent
           onOpenAutoFocus={(e) => e.preventDefault()}
           align="start"
+          sideOffset={12}
         >
           <div className="flex flex-col gap-2">
             {filteredOptions.length > 0 ? (
