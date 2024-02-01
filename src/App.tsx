@@ -24,7 +24,7 @@ function App() {
         filterFunction={(p, s) =>
           p.name.toLocaleLowerCase().includes(s.toLocaleLowerCase())
         }
-        isMulti={true}
+        isMulti={false}
         onChange={(p) => console.log(p)}
       />
     </div>

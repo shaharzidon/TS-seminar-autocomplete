@@ -75,7 +75,7 @@ export const Autocomplete = <T,>({
     <div>
       <Popover>
         <PopoverTrigger>
-          <SearchField filter={filter} setFilter={() => setFilter} />
+          <SearchField filter={filter} setFilter={setFilter} />
         </PopoverTrigger>
         <PopoverContent align="start">
           <div className="flex flex-col gap-2">
