@@ -6,18 +6,18 @@ import { Option } from "./components";
 
 // 3. build a type for the props with generics
 export type BaseAutocompleteProps<T> = {
-  options: ;
+  options: any;
   isMulti: boolean;
-  getOptionLabel: ;
-  getOptionID: ;
-  filterFunction: ;
+  getOptionLabel:any ;
+  getOptionID: any;
+  filterFunction: any;
 };
 
 // NOTE: before 4, go to app.tsx and show the motivation for discrimenating unions
 // 4. build a type for the isMulti prop and the onChange function with the corresponding argument type
 export type MultiOrSingular<T> =
-  | { isMulti: ; onChange:  }
-  | { isMulti: ; onChange:  };
+  | { isMulti: any; onChange: any }
+  | { isMulti: any ; onChange: any };
 
 //5. generate the type by using a union
 export type AutocompleteProps<T> = BaseAutocompleteProps<T> &
