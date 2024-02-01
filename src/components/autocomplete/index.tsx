@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
-import { useFilter } from "./hooks";
-import { SearchField } from "./searchField";
+import { useEffect } from "react";
+import { useFilter, useAutocompleteOptionSelectHandlare } from "./hooks";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Input } from "@/components/ui/input";
+import {Option} from "./components"
 
 export type MultiOrSingular<T> =
   | { isMulti: true; onChange: (value: T[]) => void }
@@ -24,31 +25,21 @@ export const Autocomplete = <T,>({
   onChange,
   filterFunction,
   getOptionLabel,
-}: AutocompleteProps<T>) => {
-  const [selectedOptions, setSelectedOptions] = useState<Record<string, T>>({});
+}: AutocompleteProps<T>) => {  
+  const {selectedOptions, toggleOption} = useAutocompleteOptionSelectHandlare({
+    isMulti, 
+    getOptionID
+  })
 
-  const toggleOption = (option: T) => {
-    const id = getOptionID(option);
-    setSelectedOptions((lastState: Record<string, T>) => {
-      const isOptionsSelected = lastState[id];
-      if (isMulti) {
-        if (isOptionsSelected) {
-          const copy = { ...lastState };
-          delete copy[id];
-          return copy;
-        }
-        return {
-          ...lastState,
-          [id]: option,
-        };
-      }
-      if (isOptionsSelected) return lastState;
-      return {
-        [id]: option,
-      };
-    });
+  // type safty for arguments that are not passed inline
+  const useFiltersArguments: useFilterArguments<T> = {
+    options,
+    filterFunction,
   };
-
+  
+  const { filter, setFilter, filteredOptions } = useFilter(useFiltersArguments);
+  
+  // On options state change trigger onChange appropriatly
   useEffect(() => {
     if (isMulti) {
       onChange(Object.values(selectedOptions));
@@ -60,35 +51,28 @@ export const Autocomplete = <T,>({
     }
   }, [selectedOptions, isMulti, onChange]);
 
-  // type safty for arguments that are not passed inline
-  const useFiltersArguments: useFilterArguments<T> = {
-    options,
-    filterFunction,
-  };
-
-  const { filter, setFilter, filteredOptions } = useFilter(useFiltersArguments);
-
   return (
     <div>
       <Popover>
-        <PopoverTrigger>
-          <SearchField filter={filter} setFilter={setFilter} />
+        <PopoverTrigger autoFocus>
+          <Input
+            autoFocus
+            value={filter}
+            onChange={(e) => {
+              setFilter(e.target.value);
+            }}
+          />
         </PopoverTrigger>
-        <PopoverContent align="start">
+        <PopoverContent onOpenAutoFocus={(e)=>e.preventDefault()} align="start">
           <div className="flex flex-col gap-2">
             {filteredOptions.length > 0 ? (
               filteredOptions.map((option) => (
-                <div
-                  key={getOptionID(option)}
-                  onClick={() => toggleOption(option)}
-                  className={`${
-                    selectedOptions[getOptionID(option)]
-                      ? "bg-blue-300"
-                      : "hover:bg-gray-200"
-                  } cursor-pointer p-2 rounded-md`}
-                >
-                  {getOptionLabel(option)}
-                </div>
+                <Option
+                key={getOptionID(option)}
+                onClickHandle={() => toggleOption(option)}
+                isSelected={Boolean(selectedOptions[getOptionID(option)])}
+                label={getOptionLabel(option)}
+                />
               ))
             ) : (
               <div>No results</div>
