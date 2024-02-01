@@ -1,9 +1,9 @@
-//1. v1 of pokemon type using enum
+// 1. v1 of pokemon type using enum
 export type Pokemon = {
-  type: PokemonTypes;
   isLegendary?: boolean;
   name: string;
   pokedexEntryNumber: number;
+  type: PokemonTypes;
 };
 
 export enum PokemonTypes {
@@ -19,9 +19,8 @@ export enum PokemonTypes {
   Steel = "steel",
 }
 
-// // 9. version 2, use strict enums, build a type for Pokemon type
-
-// 2. Array type with generic Pokemon type
+// 9. version 2, use strict enums, build a type for Pokemon type
+// 2. Array type with generic Pokemon type - generics are like a variable but for types
 export const pokemons: Array<Pokemon> = [
   {
     type: PokemonTypes.Fire,
