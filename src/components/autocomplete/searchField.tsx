@@ -1,4 +1,5 @@
 import { useFilter } from "./hooks";
+import { Input } from "@/components/ui/input";
 
 type FilterState<T> = Pick<
   ReturnType<typeof useFilter<T>>,
@@ -8,11 +9,5 @@ type FilterState<T> = Pick<
 type SearchFieldProps<T> = FilterState<T>;
 
 export const SearchField = <T,>({ filter, setFilter }: SearchFieldProps<T>) => {
-  return (
-    <input
-      style={{ border: "1px solid black" }}
-      value={filter}
-      onChange={(e) => setFilter(e.target.value)}
-    />
-  );
+  return <Input value={filter} onChange={(e) => setFilter(e.target.value)} />;
 };

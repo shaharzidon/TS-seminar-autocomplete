@@ -50,12 +50,9 @@ export const Autocomplete = <T,>({
   };
 
   useEffect(() => {
-    // Check if it's a multi-select scenario
     if (isMulti) {
-      // If it is, call the onChange with an array
       onChange(Object.values(selectedOptions));
     } else {
-      // If it's a single-select, find the first selected option
       const singleOption = Object.values(selectedOptions)[0];
       if (singleOption !== undefined) {
         onChange(singleOption);
