@@ -1,3 +1,4 @@
+import * as React from "react";
 import "./App.css";
 import { Autocomplete } from "./components/autocomplete";
 import { Pokemon, pokemons } from "./mock.data";

@@ -1,36 +1,42 @@
+import * as React from "react";
 import { useEffect } from "react";
 import { useFilter, useAutocompleteOptionSelectHandlare } from "./hooks";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Input } from "@/components/ui/input";
 import { Option } from "./components";
 
-// 3. build a type for the props with generics
-export type BaseAutocompleteProps<T> = {
+// 3. build a type for the props
+export type BaseAutocompleteProps = {
+  // the ooptions available for choosing, for the best DX, allow array of any type
   options: any;
-  isMulti: boolean;
-  getOptionLabel:any ;
+  // is multi select
+  isMulti: any;
+  // a function to call when we want to generate a label from an option
+  getOptionLabel: any;
+  // a function to call when we want to generate an id from an option
   getOptionID: any;
+  // a function that recieves the option and the search term and returns true if the option matches the search
   filterFunction: any;
 };
 
-// NOTE: before 4, go to app.tsx and show the motivation for discrimenating unions
 // 4. build a type for the isMulti prop and the onChange function with the corresponding argument type
-export type MultiOrSingular<T> =
-  | { isMulti: any; onChange: any }
-  | { isMulti: any ; onChange: any };
+export type MultiOrSingular =
+  // if is multi is true the on change will recieve an array of selected options
+  | { isMulti: true; onChange: any }
+  // if is multi is false the on change will recieve a single value
+  | { isMulti: false; onChange: any };
 
 //5. generate the type by using a union
-export type AutocompleteProps<T> = BaseAutocompleteProps<T> &
-  MultiOrSingular<T>;
+export type AutocompleteProps = any;
 
-export const Autocomplete = <T,>({
+export const Autocomplete = ({
   options,
   getOptionID,
   isMulti,
   onChange,
   filterFunction,
   getOptionLabel,
-}: AutocompleteProps<T>) => {
+}: AutocompleteProps) => {
   const { selectedOptions, toggleOption } = useAutocompleteOptionSelectHandlare(
     {
       isMulti,

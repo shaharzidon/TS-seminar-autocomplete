@@ -1,18 +1,19 @@
 import { useState, useMemo } from "react";
-import { AutocompleteProps, BaseAutocompleteProps } from ".";
 
 // 6. use Pick utility type to constract dynamic type - when AutocompleteProps change the type is updated
 type UseAutocompleteOptionSelectHandlareArgs = any;
 
-export const useAutocompleteOptionSelectHandlare = <T>({
+export const useAutocompleteOptionSelectHandlare = ({
   getOptionID,
   isMulti,
-}: UseAutocompleteOptionSelectHandlareArgs<T>) => {
-  const [selectedOptions, setSelectedOptions] = useState<Record<string, T>>({});
+}: UseAutocompleteOptionSelectHandlareArgs) => {
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, any>>(
+    {},
+  );
 
-  const toggleOption = (option: T) => {
+  const toggleOption = (option: any) => {
     const id = getOptionID(option);
-    setSelectedOptions((lastState: Record<string, T>) => {
+    setSelectedOptions((lastState: Record<string, any>) => {
       const isOptionsSelected = lastState[id];
       if (isMulti) {
         if (isOptionsSelected) {
@@ -40,16 +41,13 @@ export const useAutocompleteOptionSelectHandlare = <T>({
 
 // 7. create the type for the arguments in useFilters - use BaseAutocompleteProps and Omit
 // NOTE: just for practice, Pick would be a better logical choice
-export type UseFiltersArgs<T> = any;
+export type UseFiltersArgs = any;
 
-export const useFilter = <T>({
-  options,
-  filterFunction,
-}: UseFiltersArgs<T>) => {
+export const useFilter = ({ options, filterFunction }: UseFiltersArgs) => {
   const [filter, setFilter] = useState<string>("");
 
   const filteredOptions = useMemo(() => {
-    return options.filter((value: T) => filterFunction(value, filter));
+    return options.filter((value: any) => filterFunction(value, filter));
   }, [options, filter, filterFunction]);
 
   return {
