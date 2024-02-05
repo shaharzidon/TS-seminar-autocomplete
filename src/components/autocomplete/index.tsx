@@ -65,15 +65,22 @@ export const Autocomplete = ({
 
   // Function to render selected options
   const renderSelectedOptions = () => {
-    return isMulti ? (
-      <span>
-        {Object.values(selectedOptions)
-          .map((option) => getOptionLabel(option))
-          .join(", ")}
-      </span>
-    ) : (
-      getOptionLabel(Object.values(selectedOptions)[0])
-    );
+    const selectedOptionsArray = Object.values(selectedOptions);
+
+    if (selectedOptionsArray.length === 0) {
+      return null;
+    }
+
+    if (isMulti) {
+      return (
+        <span>
+          {selectedOptionsArray
+            .map((option) => getOptionLabel(option))
+            .join(", ")}
+        </span>
+      );
+    }
+    return getOptionLabel(selectedOptionsArray[0]);
   };
 
   return (
