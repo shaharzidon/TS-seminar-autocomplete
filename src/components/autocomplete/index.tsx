@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEffect } from "react";
 import { useFilter, useAutocompleteOptionSelectHandlare } from "./hooks";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Input } from "@/components/ui/input";
+import { Input } from "../ui/input";
 import { Option } from "./components";
 
 // 3. build a type for the props
@@ -77,10 +77,10 @@ export const Autocomplete = ({
   };
 
   return (
-    <div className="w-full flex justify-stretch items-center">
+    <div className="w-full flex flex-col justify-start items-start">
       <Popover>
+        {renderSelectedOptions()}
         <PopoverTrigger autoFocus>
-          {renderSelectedOptions()}
           <Input
             className="min-w-full"
             placeholder="Search"
@@ -97,6 +97,7 @@ export const Autocomplete = ({
           onOpenAutoFocus={(e) => e.preventDefault()}
           align="start"
           sideOffset={12}
+          className="max-h-[300px] overflow-y-auto"
         >
           <div className="flex flex-col gap-2">
             {filteredOptions.length > 0 ? (
