@@ -7,9 +7,9 @@ import { Option } from "./components";
 
 // 3. build a type for the props
 export type BaseAutocompleteProps = {
-  // the ooptions available for choosing, for the best DX, allow array of any type
+  // the options available for choosing, for the best DX, allow array of any type
   options: any;
-  // is multi select
+  // is multi select or single value select
   isMulti: any;
   // a function to call when we want to generate a label from an option
   getOptionLabel: any;
@@ -44,7 +44,6 @@ export const Autocomplete = ({
     },
   );
 
-  // 8. extract the arguments to a contant and make it fully typed
   const { filter, setFilter, filteredOptions } = useFilter({
     options,
     filterFunction,

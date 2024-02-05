@@ -21,7 +21,7 @@ function App() {
         getOptionLabel={getPokemonOptionLabel}
         getOptionID={getPokemonOptionID}
         filterFunction={pokemonFilterFunction}
-        isMulti={false}
+        isMulti={true}
         onChange={onPokemonsSelected}
       />
     </div>
