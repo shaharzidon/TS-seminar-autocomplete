@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useFilter, useAutocompleteOptionSelectHandlare } from "./hooks";
+import { useFilter, UseAutocompleteOptions } from "./hooks";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Input } from "../ui/input";
 import { Option } from "./components";
@@ -7,23 +7,23 @@ import { Option } from "./components";
 // 3. build a type for the props
 export type BaseAutocompleteProps<T> = {
   // the options that are available for choosing, for the best DX, allow array of any type
-  options: T[];
+  options: Array<T>;
   // is multi select or single value select
   isMulti: boolean;
   // a function to call when we want to generate a label from an option
-  getOptionLabel: (options: T) => string;
-  // a function to call when we want to generate an id from an option
-  getOptionID: (options: T) => string;
-  // a function that recieves an option and the search term and returns true if the option matches the search
+  getOptionLabel: (option: T) => string;
+  // a function to call when we want to generate an id (string) from an option
+  getOptionID: (option: T) => string;
+  // a function that recieves an option and the search term and returns true if the option matches the search and false otherwise
   filterFunction: (option: T, searchTerm: string) => boolean;
 };
 
 // 4. build a type for the isMulti prop and the onChange function with the corresponding argument type
 export type MultiOrSingular<T> =
   // if is multi is true the on change will recieve an array of selected options
-  | { isMulti: true; onChange: (value: T[]) => void }
+  | { isMulti: true; onChange: (options: Array<T>) => void }
   // if is multi is false the on change will recieve a single value
-  | { isMulti: false; onChange: (value: T) => void };
+  | { isMulti: false; onChange: (option: T) => void };
 
 //5. generate the type by using a union
 export type AutocompleteProps<T> = BaseAutocompleteProps<T> &
@@ -37,12 +37,10 @@ export const Autocomplete = <T,>({
   filterFunction,
   getOptionLabel,
 }: AutocompleteProps<T>) => {
-  const { selectedOptions, toggleOption } = useAutocompleteOptionSelectHandlare(
-    {
-      isMulti,
-      getOptionID,
-    },
-  );
+  const { selectedOptions, toggleOption } = UseAutocompleteOptions({
+    isMulti,
+    getOptionID,
+  });
 
   const { filter, setFilter, filteredOptions } = useFilter({
     options,
@@ -60,9 +58,7 @@ export const Autocomplete = <T,>({
     }
 
     const singleOption = allSelectedOptions[0];
-    if (singleOption !== undefined) {
-      onChange(singleOption);
-    }
+    onChange(singleOption);
   }, [selectedOptions, isMulti, onChange]);
 
   // Function to render selected options

@@ -2,13 +2,24 @@ import "./App.css";
 import { Autocomplete } from "./components/autocomplete";
 import { Pokemon, pokemons } from "./mock.data";
 
+const stringCompaire = (string: string, searchTerm: string) =>
+  string.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase());
+
 const getPokemonOptionLabel = (pokemon: Pokemon) => pokemon.name;
 const getPokemonOptionID = (pokemon: Pokemon) =>
   pokemon.pokedexEntryNumber.toString();
 const pokemonFilterFunction = (pokemon: Pokemon, searchTerm: string) =>
-  pokemon.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase());
-const onPokemonsSelected = (pokemon: Pokemon[] | Pokemon) => {
-  console.log({ pokemon });
+  stringCompaire(pokemon.name, searchTerm);
+const onPokemonsSelected = (pokemon: Pokemon[]) => {
+  const isArray = Array.isArray(pokemon);
+
+  if (isArray) {
+    //set array state
+  }
+
+  if (!isArray) {
+    //set single state
+  }
 };
 
 function App() {
@@ -20,7 +31,7 @@ function App() {
         getOptionLabel={getPokemonOptionLabel}
         getOptionID={getPokemonOptionID}
         filterFunction={pokemonFilterFunction}
-        isMulti={false}
+        isMulti={true}
         onChange={onPokemonsSelected}
       />
     </div>
