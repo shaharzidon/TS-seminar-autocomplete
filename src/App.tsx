@@ -10,7 +10,7 @@ const getPokemonOptionID = (pokemon: Pokemon) =>
   pokemon.pokedexEntryNumber.toString();
 const pokemonFilterFunction = (pokemon: Pokemon, searchTerm: string) =>
   stringCompaire(pokemon.name, searchTerm);
-const onPokemonsSelected = (pokemon: Pokemon[]) => {
+const onPokemonsSelected = (pokemon: Pokemon[] | Pokemon) => {
   const isArray = Array.isArray(pokemon);
 
   if (isArray) {
