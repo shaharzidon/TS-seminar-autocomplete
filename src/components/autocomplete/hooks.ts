@@ -2,12 +2,12 @@ import { useState, useMemo } from "react";
 //import { BaseAutocompleteProps } from "./index";
 
 // 6. use Pick utility type to constract dynamic type - when AutocompleteProps change the type is updated
-type UseAutocompleteOptionSelectHandlareArgs = any;
+type UseAutocompleteOptionsArgs = any;
 
 export const useAutocompleteOptionSelectHandlare = ({
   getOptionID,
   isMulti,
-}: UseAutocompleteOptionSelectHandlareArgs) => {
+}: UseAutocompleteOptionsArgs) => {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, any>>(
     {},
   );

@@ -7,7 +7,7 @@ import { Option } from "./components";
 
 // 3. build a type for the props
 export type BaseAutocompleteProps = {
-  // the options available for choosing, for the best DX, allow array of any type
+  // the options that are available for choosing, for the best DX, allow array of any type
   options: any;
   // is multi select or single value select
   isMulti: any;
@@ -15,7 +15,7 @@ export type BaseAutocompleteProps = {
   getOptionLabel: any;
   // a function to call when we want to generate an id from an option
   getOptionID: any;
-  // a function that recieves the option and the search term and returns true if the option matches the search
+  // a function that recieves an option and the search term and returns true if the option matches the search
   filterFunction: any;
 };
 
@@ -51,12 +51,13 @@ export const Autocomplete = ({
 
   // On options state change trigger onChange appropriatly
   useEffect(() => {
+    const allSelectedOptions = Object.values(selectedOptions);
     if (isMulti) {
-      const allOptions = Object.values(selectedOptions);
+      const allOptions = allSelectedOptions;
       onChange(allOptions);
       return;
     }
-    const singleOption = Object.values(selectedOptions)[0];
+    const singleOption = allSelectedOptions[0];
     if (singleOption !== undefined) {
       onChange(singleOption);
     }
@@ -64,22 +65,22 @@ export const Autocomplete = ({
 
   // Function to render selected options
   const renderSelectedOptions = () => {
-    const selectedOptionsArray = Object.values(selectedOptions);
+    const allSelectedOptions = Object.values(selectedOptions);
 
-    if (selectedOptionsArray.length === 0) {
+    if (allSelectedOptions.length === 0) {
       return null;
     }
 
     if (isMulti) {
       return (
         <span>
-          {selectedOptionsArray
+          {allSelectedOptions
             .map((option) => getOptionLabel(option))
             .join(", ")}
         </span>
       );
     }
-    return getOptionLabel(selectedOptionsArray[0]);
+    return getOptionLabel(allSelectedOptions[0]);
   };
 
   return (
@@ -107,7 +108,7 @@ export const Autocomplete = ({
         >
           <div className="flex flex-col gap-2">
             {filteredOptions.length > 0 ? (
-              filteredOptions.map((option: any) => (
+              filteredOptions.map((option) => (
                 <Option
                   key={getOptionID(option)}
                   onClickHandle={() => toggleOption(option)}

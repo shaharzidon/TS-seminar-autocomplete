@@ -7,6 +7,8 @@ export type Pokemon = {
   type: any;
 };
 
+//TypeScript enums allow grouping of related values, enhancing code readability
+//and maintenance with named constants and controlled value sets.
 export enum PokemonTypes {
   Fire = "fire",
   Water = "water",
