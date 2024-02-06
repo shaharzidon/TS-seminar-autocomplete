@@ -1,10 +1,10 @@
 // 1. v1 of pokemon type using enum
 export type Pokemon = {
   // optional - might be undefined
-  isLegendary: any;
-  name: any;
-  pokedexEntryNumber: any;
-  type: any;
+  isLegendary?: boolean;
+  name: string;
+  pokedexEntryNumber: number;
+  type: PokemonTypes;
 };
 
 //TypeScript enums allow grouping of related values, enhancing code readability

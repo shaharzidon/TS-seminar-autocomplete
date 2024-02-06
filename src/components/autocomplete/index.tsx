@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useEffect } from "react";
 import { useFilter, useAutocompleteOptionSelectHandlare } from "./hooks";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -6,37 +5,38 @@ import { Input } from "../ui/input";
 import { Option } from "./components";
 
 // 3. build a type for the props
-export type BaseAutocompleteProps = {
+export type BaseAutocompleteProps<T> = {
   // the options that are available for choosing, for the best DX, allow array of any type
-  options: any;
+  options: T[];
   // is multi select or single value select
-  isMulti: any;
+  isMulti: boolean;
   // a function to call when we want to generate a label from an option
-  getOptionLabel: any;
+  getOptionLabel: (options: T) => string;
   // a function to call when we want to generate an id from an option
-  getOptionID: any;
+  getOptionID: (options: T) => string;
   // a function that recieves an option and the search term and returns true if the option matches the search
-  filterFunction: any;
+  filterFunction: (option: T, searchTerm: string) => boolean;
 };
 
 // 4. build a type for the isMulti prop and the onChange function with the corresponding argument type
-export type MultiOrSingular =
+export type MultiOrSingular<T> =
   // if is multi is true the on change will recieve an array of selected options
-  | { isMulti: true; onChange: any }
+  | { isMulti: true; onChange: (value: T[]) => void }
   // if is multi is false the on change will recieve a single value
-  | { isMulti: false; onChange: any };
+  | { isMulti: false; onChange: (value: T) => void };
 
 //5. generate the type by using a union
-export type AutocompleteProps = any;
+export type AutocompleteProps<T> = BaseAutocompleteProps<T> &
+  MultiOrSingular<T>;
 
-export const Autocomplete = ({
+export const Autocomplete = <T,>({
   options,
   getOptionID,
   isMulti,
   onChange,
   filterFunction,
   getOptionLabel,
-}: AutocompleteProps) => {
+}: AutocompleteProps<T>) => {
   const { selectedOptions, toggleOption } = useAutocompleteOptionSelectHandlare(
     {
       isMulti,
@@ -52,11 +52,13 @@ export const Autocomplete = ({
   // On options state change trigger onChange appropriatly
   useEffect(() => {
     const allSelectedOptions = Object.values(selectedOptions);
+
     if (isMulti) {
       const allOptions = allSelectedOptions;
       onChange(allOptions);
       return;
     }
+
     const singleOption = allSelectedOptions[0];
     if (singleOption !== undefined) {
       onChange(singleOption);
