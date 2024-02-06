@@ -1,9 +1,10 @@
 // 1. v1 of pokemon type using enum
 export type Pokemon = {
-  isLegendary?: boolean;
-  name: string;
-  pokedexEntryNumber: number;
-  type: PokemonTypes;
+  // optional - might be undefined
+  isLegendary: any;
+  name: any;
+  pokedexEntryNumber: any;
+  type: any;
 };
 
 export enum PokemonTypes {

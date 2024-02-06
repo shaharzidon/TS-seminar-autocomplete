@@ -107,7 +107,7 @@ export const Autocomplete = ({
         >
           <div className="flex flex-col gap-2">
             {filteredOptions.length > 0 ? (
-              filteredOptions.map((option) => (
+              filteredOptions.map((option: any) => (
                 <Option
                   key={getOptionID(option)}
                   onClickHandle={() => toggleOption(option)}
