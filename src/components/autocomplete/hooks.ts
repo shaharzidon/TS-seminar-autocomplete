@@ -1,22 +1,21 @@
 import { useState, useMemo } from "react";
-import { BaseAutocompleteProps } from "./index";
+//import { BaseAutocompleteProps } from "./index";
 
 // 6. use Pick utility type to constract dynamic type - when BaseAutocompleteProps change the type is updated
 // NOTE: use as NEEDED!
-type UseAutocompleteOptionsArgs<T> = Pick<
-  BaseAutocompleteProps<T>,
-  "getOptionID" | "isMulti"
->;
+type UseAutocompleteOptionsArgs = any;
 
-//7. write the same type with Omit
+// 7. write the same type with Omit
 
-export const UseAutocompleteOptions = <T>({
+export const UseAutocompleteOptions = ({
   getOptionID,
   isMulti,
-}: UseAutocompleteOptionsArgs<T>) => {
-  const [selectedOptions, setSelectedOptions] = useState<Record<string, T>>({});
+}: UseAutocompleteOptionsArgs) => {
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, any>>(
+    {},
+  );
 
-  const toggleOption = (option: T) => {
+  const toggleOption = (option: any) => {
     const id = getOptionID(option);
     setSelectedOptions((lastState) => {
       const isOptionsSelected = lastState[id];
@@ -44,21 +43,17 @@ export const UseAutocompleteOptions = <T>({
   };
 };
 
-//NOTE: this hook should be reusable, it makes no sens to depend on other types
-// if the autocompleteBaseProps will change it will change as well
-type UseFiltersArgs<T> = {
-  options: T[];
-  filterFunction: (option: T, filter: string) => boolean;
+// 8. complete the hook type
+type UseFiltersArgs = {
+  options: any;
+  filterFunction: any;
 };
 
-export const useFilter = <T>({
-  options,
-  filterFunction,
-}: UseFiltersArgs<T>) => {
+export const useFilter = ({ options, filterFunction }: UseFiltersArgs) => {
   const [filter, setFilter] = useState<string>("");
 
   const filteredOptions = useMemo(() => {
-    return options.filter((value: T) => filterFunction(value, filter));
+    return options.filter((value: any) => filterFunction(value, filter));
   }, [options, filter, filterFunction]);
 
   return {

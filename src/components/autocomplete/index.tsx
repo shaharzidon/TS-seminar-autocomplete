@@ -5,38 +5,37 @@ import { Input } from "../ui/input";
 import { Option } from "./components";
 
 // 3. build a type for the props
-export type BaseAutocompleteProps<T> = {
+export type BaseAutocompleteProps = {
   // the options that are available for choosing, for the best DX, allow array of any type
-  options: Array<T>;
+  options: any;
   // is multi select or single value select
-  isMulti: boolean;
+  isMulti: any;
   // a function to call when we want to generate a label from an option
-  getOptionLabel: (option: T) => string;
+  getOptionLabel: any;
   // a function to call when we want to generate an id (string) from an option
-  getOptionID: (option: T) => string;
+  getOptionID: any;
   // a function that recieves an option and the search term and returns true if the option matches the search and false otherwise
-  filterFunction: (option: T, searchTerm: string) => boolean;
+  filterFunction: any;
 };
 
 // 4. build a type for the isMulti prop and the onChange function with the corresponding argument type
-export type MultiOrSingular<T> =
+export type MultiOrSingular =
   // if is multi is true the on change will recieve an array of selected options
-  | { isMulti: true; onChange: (options: Array<T>) => void }
+  | { isMulti: true; onChange: (options: any) => void }
   // if is multi is false the on change will recieve a single value
-  | { isMulti: false; onChange: (option: T) => void };
+  | { isMulti: false; onChange: (option: any) => void };
 
-//5. generate the type by using a union
-export type AutocompleteProps<T> = BaseAutocompleteProps<T> &
-  MultiOrSingular<T>;
+// 5. generate the type by using a union
+export type AutocompleteProps = any;
 
-export const Autocomplete = <T,>({
+export const Autocomplete = ({
   options,
   getOptionID,
   isMulti,
   onChange,
   filterFunction,
   getOptionLabel,
-}: AutocompleteProps<T>) => {
+}: AutocompleteProps) => {
   const { selectedOptions, toggleOption } = UseAutocompleteOptions({
     isMulti,
     getOptionID,

@@ -1,29 +1,31 @@
-// 9. version 2, use strict enums, build a type for Pokemon type
-export const PokemonTypes = {
-  Fire: "fire",
-  Water: "water",
-  Grass: "grass",
-  Electric: "electric",
-  Psychic: "psychic",
-  Dragon: "dragon",
-  Ice: "ice",
-  Fairy: "fairy",
-  Ghost: "ghost",
-  Steel: "steel",
-} as const;
-
-export type PokemonType = (typeof PokemonTypes)[keyof typeof PokemonTypes];
-
-// 10. update the pokemon type accordingly
+// 1. version pokemon type with enum
 export type Pokemon = {
-  type: PokemonType;
-  isLegendary?: boolean;
-  name: string;
-  pokedexEntryNumber: number;
+  // optional - might be undefined
+  isLegendary: any;
+  name: any;
+  pokedexEntryNumber: any;
+  type: any;
 };
 
-// 2. Array type with generic Pokemon type - generics are like a variable but for types
-export const pokemons: Array<Pokemon> = [
+//TypeScript enums allow grouping of related values, enhancing code readability
+//and maintenance with named constants and controlled value sets.
+export enum PokemonTypes {
+  Fire = "fire",
+  Water = "water",
+  Grass = "grass",
+  Electric = "electric",
+  Psychic = "psychic",
+  Dragon = "dragon",
+  Ice = "ice",
+  Fairy = "fairy",
+  Ghost = "ghost",
+  Steel = "steel",
+}
+
+// 9. use cont object as enums, allows more flexibility while still using types
+
+// 2. generic Array type with Pokemon type - generics are like a variable but for types
+export const pokemons: any = [
   {
     type: PokemonTypes.Fire,
     name: "Charmander",
